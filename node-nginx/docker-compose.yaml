@@ -1,4 +1,16 @@
 services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d
+    networks:
+      - node-network
+    depends_on:
+      - app
+
   app:
     build: 
       context: .
@@ -6,8 +18,6 @@ services:
     volumes:
       - .:/usr/src/app
     tty: true
-    ports:
-      - "3000:3000"
     networks:
       - node-network
     depends_on:
